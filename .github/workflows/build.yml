@@ -19,28 +19,29 @@ jobs:
 
       - name: Fix Android Embedding
         run: |
+          # Создаем директорию для MainActivity
           mkdir -p android/app/src/main/kotlin/com/example/victory_app
+          
+          # Создаем MainActivity.kt
           echo 'package com.example.victory_app
           import io.flutter.embedding.android.FlutterActivity
           class MainActivity: FlutterActivity() {}' > android/app/src/main/kotlin/com/example/victory_app/MainActivity.kt
+          
+          # Обновляем minSdkVersion
+          sed -i 's/minSdkVersion .*/minSdkVersion 21/' android/app/build.gradle
+          
+          # Добавляем интернет-разрешение
+          sed -i '/<manifest /a <uses-permission android:name="android.permission.INTERNET"/>' android/app/src/main/AndroidManifest.xml
 
       - name: Install Dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --no-sound-null-safety
 
-      - name: Build AppBundle
-        run: flutter build appbundle --release
-
-      - name: Build Web
-        run: flutter build web --release
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
         with:
-          name: victory-app-builds
-          path: |
-            build/app/outputs/flutter-apk/app-release.apk
-            build/app/outputs/bundle/release/app-release.aab
-            build/web/
+          name: victory-app-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
