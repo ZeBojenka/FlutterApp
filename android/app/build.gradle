@@ -2,16 +2,17 @@ android {
     namespace "com.example.victory_app"
     compileSdkVersion 34
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     defaultConfig {
         applicationId "com.example.victory_app"
-        minSdkVersion 21  // Минимум 21 для V2 embedding
+        minSdkVersion 21  // Должно быть не меньше 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
     }
 }
