@@ -1,0 +1,21 @@
+# Flutter
+**/android/
+**/ios/
+**/web/
+**/build/
+**/.dart_tool/
+
+# Android
+*.jks
+*.keystore
+*.key
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+*.iml
+
+# macOS
+.DS_Store
